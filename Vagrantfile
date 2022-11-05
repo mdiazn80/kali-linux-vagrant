@@ -11,19 +11,16 @@ Vagrant.configure("2") do |config|
   
     # config.vm.network "forwarded_port", guest: 8834, host: 8834
   
-    config.vm.synced_folder "./data", "/vagrant"
+    config.vm.synced_folder "./data", "/vagrant", SharedFoldersEnableSymlinksCreate: false
   
     config.vbguest.auto_update = false
     config.vbguest.no_remote = true
     
     # VirtualBox specific settings
     config.vm.provider "virtualbox" do |vb|
-      vb.default_nic_type = "82540EM"
       vb.gui = false
       vb.cpus = 4
       vb.memory = "8192"
-      vb.customize ["modifyvm", :id, "--usb", "on"]
-      vb.customize ['usbfilter', 'add', '0', '--target', :id, '--name', 'ALFA', '--vendorid', '0x148f', '--productid', '0x3070']
     end
   
     # Provision the machine with a shell script
